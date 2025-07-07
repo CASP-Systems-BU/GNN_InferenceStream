@@ -1,6 +1,7 @@
 # Bridging GNN Inference and Dataflow Stream Processing: Challenges and Opportunities
 This repository includes the implementation of streaming GNN inference described in the [GRADES-NDA 2025 paper](https://dl.acm.org/doi/10.1145/3735546.3735856).
 You can cite the paper using the BibTeX below:
+```bibtex
 @inproceedings{10.1145/3735546.3735856,
 author = {Shami, Naima Abrar and Kalavri, Vasiliki},
 title = {Bridging GNN Inference and Dataflow Stream Processing: Challenges and Opportunities},
@@ -18,7 +19,7 @@ keywords = {Graph Neural Networks, Stream Processing},
 location = {Berlin, Germany},
 series = {GRADES-NDA '25}
 }
-
+```
 GNN_InferenceStream is a real-time pipeline for streaming Graph Neural Network (GNN) inference using Apache Flink and TorchServe.
 It continuously processes incoming node events (e.g. node IDs), dynamically constructs 2-hop neighborhoods from a static graph, and performs GNN inference on the fly using a pre-trained PyTorch model. This enables the generation of fresh node embeddings in response to live events, without needing to retrain or batch-process the entire graph. This is essential in use cases like fraud detection, where suspicious transactions must be flagged instantly based on graph structure; recommendation systems, where user-item interactions trigger updated embeddings; or social network analysis, where friend suggestions or content ranking can depend on the evolving local topology of each user.
 
