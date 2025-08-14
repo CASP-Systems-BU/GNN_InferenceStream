@@ -42,6 +42,11 @@ From the repo root:
 ```bash
 mvn clean package
 ```
+(Optional) Run all tests
+```bash
+mvn clean test -U
+```
+
 ### 2. Start the Flink Cluster
 
 From your Flink installation directory:
