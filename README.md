@@ -33,7 +33,9 @@ To illustrate the utility of this pipeline, consider a **social media platform**
 
 ### Streaming inference flow
 
-The pipeline processes a stream of **target node ID events**, where each event could represent a node that requires fresh inference, for example, a user logging in, viewing content, or triggering a recommendation request. For every incoming node ID, the system constructs its 2-hop neighborhood from the static graph, retrieves all relevant features, and sends the subgraph to a pre-trained GNN model hosted on TorchServe. The model returns a fresh embedding or classification output, which can then be used for tasks such as friend recommendations, content ranking, or user behavior prediction.
+The pipeline (as shown below) processes a stream of **target node ID events**, where each event could represent a node that requires fresh inference, for example, a user logging in, viewing content, or triggering a recommendation request. For every incoming node ID, the system constructs its 2-hop neighborhood from the static graph, retrieves all relevant features, and sends the subgraph to a pre-trained GNN model hosted on TorchServe. The model returns a fresh embedding or classification output, which can then be used for tasks such as friend recommendations, content ranking, or user behavior prediction.
+
+![Pipeline Overview](image/pipeline.png)
 
 ### 1. Build the Flink Job
 From the repo root:
