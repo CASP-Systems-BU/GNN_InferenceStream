@@ -20,7 +20,7 @@ location = {Berlin, Germany},
 series = {GRADES-NDA '25}
 }
 ```
-GNN_InferenceStream is a real-time pipeline for streaming Graph Neural Network (GNN) inference using Apache Flink and TorchServe.
+This work presents a real-time pipeline for streaming Graph Neural Network (GNN) inference using Apache Flink and TorchServe.
 It continuously processes incoming node events (e.g. node IDs), dynamically constructs 2-hop neighborhoods from a static graph, and performs GNN inference on the fly using a pre-trained PyTorch model. This enables the generation of fresh node embeddings in response to live events, without needing to retrain or batch-process the entire graph. This is essential in use cases like fraud detection, where suspicious transactions must be flagged instantly based on graph structure; recommendation systems, where user-item interactions trigger updated embeddings; or social network analysis, where friend suggestions or content ranking can depend on the evolving local topology of each user.
 
 ### Use Case example: Social Network Friend Recommendation
