@@ -3,7 +3,7 @@ import requests
 import csv
 import datetime
 
-FLINK_REST_URL = "http://localhost:8084"
+FLINK_REST_URL = "http://localhost:8085"
 POLL_INTERVAL_SECONDS = 10
 
 # Enter output file name

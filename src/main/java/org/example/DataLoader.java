@@ -24,12 +24,12 @@ public class DataLoader {
     private static final Logger LOG = LoggerFactory.getLogger(DataLoader.class);
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setParallelism(16);
+        env.setParallelism(64);
 
         RocksDBStateBackend rocksDBStateBackend = new RocksDBStateBackend(
                 "file:///savepoints", false);
         rocksDBStateBackend.setDbStoragePath("/rocksdb-storage");
-        String filePath = "scripts/toyedgesints.csv"; //example file format
+        String filePath = "/home/biondi/GNN_InferenceStream/scripts/redditDataset.csv"; //example file format
                                                         // src node, neighbor 1; neighbor 2, features of src node
                                                         // with features being 602 long
 
@@ -103,7 +103,7 @@ public class DataLoader {
                         String result = "Node: " + value.f0 + ", Neighbors: " + value.f1.f0 + ", Features: " + Arrays.toString(value.f1.f1);
                         out.collect(result);
                     }
-                }).uid("stateProcessor1").setParallelism(12);
+                }).uid("stateProcessor1").setParallelism(64);
 
         // Second UID: Processing edges for neighbor state with a different UID
         parsedData.keyBy(value -> value.f0)
@@ -134,7 +134,7 @@ public class DataLoader {
                         String result = "Node: " + value.f0 + " neighbors: " + uniqueNeighbors;
                         out.collect(result);
                     }
-                }).uid("stateProcessor2").setParallelism(12);
+                }).uid("stateProcessor2").setParallelism(64);
 
         // Third UID: Storing features for both source and destination nodes
         DataStream<Tuple2<Integer, float[]>> featureStream = parsedData
@@ -161,7 +161,7 @@ public class DataLoader {
                         featuresState3.update(value.f1);
                         LOG.info("Assigned features for node {}: {}", value.f0, Arrays.toString(value.f1));
                     }
-                }).uid("stateProcessor3").setParallelism(12);
+                }).uid("stateProcessor3").setParallelism(64);
 
         env.execute("DataLoader");
     }

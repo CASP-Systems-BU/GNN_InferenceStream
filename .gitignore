@@ -1,1 +1,4 @@
 target/
+key_file.json
+scripts/
+logs/

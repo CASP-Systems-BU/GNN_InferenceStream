@@ -98,7 +98,7 @@ public class TwoHop {
         DataStream<Integer> parsedStream = rawStream
                 .map(raw -> Integer.parseInt(raw.split(",", 2)[0]))
                 .name("ExtractNodeId");
-        String checkpointDir = "file://" + System.getProperty("user.dir") + "/checkpoints";
+        String checkpointDir = "file:///home/biondi/GNN_InferenceStream/checkpoints";
 
         env.setStateBackend(new RocksDBStateBackend(checkpointDir, true));
 
@@ -143,7 +143,7 @@ public class TwoHop {
                 .process(new AggregateToJsonFunction())
                 .name("AggregateToJson")
                 .uid("aggregateToJson")
-                .setParallelism(60);
+                .setParallelism(64);
 
         // 11) TorchServe inference (Async)
         DataStream<String> inferenceResults = AsyncDataStream.unorderedWait(
@@ -160,8 +160,7 @@ public class TwoHop {
 
         // Attach the latency counting sink
         inferenceResults.transform("Q3_Sink", objectTypeInfo, sinker)
-                .setParallelism(1)
-                .slotSharingGroup("sink");
+                .setParallelism(1);
 
         // Kafka sink properties
         Properties kafkaProperties = new Properties();
@@ -182,8 +181,7 @@ public class TwoHop {
         inferenceResults
                 .sinkTo(kafkaSink)
                 .name("Kafka Sink for Inference Results")
-                .setParallelism(1)
-                .slotSharingGroup("sink");
+                .setParallelism(1);
 
         // Execute
         env.execute("TwoHop");
